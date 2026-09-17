@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'quiz',
+    'rest_framework.authtoken',
     'rest_framework',
-    'corsheaders'
+    'quiz',
+    'corsheaders',
+    'rest_auth'
 ]
 
 MIDDLEWARE = [
