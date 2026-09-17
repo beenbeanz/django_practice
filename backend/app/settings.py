@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j%nizs9e)fil3!bp#w3cirr$sqt055a#hsk6d2_r3u*mumgxuv'
+SECRET_KEY = 'django-insecure-_6(gi+n9n=$t%4tr8so5y-g(!p59ypaiw@o)%edhi7_a)-ddh#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,11 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',
+    'quiz',
     'rest_framework',
-    'corsheaders',
-    'rest_auth',
-    'rest_framework_simplejwt.token_blacklist'
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -56,9 +54,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-)
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
 
 ROOT_URLCONF = 'app.urls'
 
@@ -130,6 +128,7 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/' # add this
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # add this
 
+
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
@@ -138,36 +137,3 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
-
-
-CORS_ALLOWED_ORIGINS = [
-"https://domain.com",
-"https://api.domain.com",
-"http://localhost:3000",
-"http://127.0.0.1:9000"
-]
-
-CORS_ALLOWED_ORIGIN_REGEXES = [
-r"^https://w+.domain.com$",
-]
-
-CORS_ALLOW_METHODS = [
-'DELETE',
-'GET',
-'OPTIONS',
-'PATCH',
-'POST',
-'PUT',
-]
-
-CORS_ALLOW_HEADERS = [
-'accept',
-'accept-encoding',
-'authorization',
-'content-type',
-'dnt',
-'origin',
-'user-agent',
-'x-csrftoken',
-'x-requested-with',
-]
