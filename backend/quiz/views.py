@@ -2,12 +2,12 @@ from django.shortcuts import render
 from .models import Quiz, Question, CustomUser  
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import QuizSerializer, QuestionSerializer, UserSerializer
+from .serializers import QuizSerializer, QuestionSerializer, userSerializer
 
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
 	queryset = CustomUser.objects.all()
-	serializer_class = UserSerializer
+	serializer_class = userSerializer
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['id']
 

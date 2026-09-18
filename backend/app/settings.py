@@ -28,6 +28,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 # Application definition
 
@@ -42,7 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'quiz',
     'corsheaders',
-    'rest_auth'
+    'dj_rest_auth'
 ]
 
 MIDDLEWARE = [

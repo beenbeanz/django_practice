@@ -20,13 +20,15 @@ class CustomUserManager(BaseUserManager):
 
 # Create your models here.
 class CustomUser(AbstractUser):
+
     USER = 1
     SUPERVISOR = 2
     ROLE_CHOICES = ((USER, 'user'), (SUPERVISOR, 'supervisor'))
     role = models.CharField(choices=ROLE_CHOICES, null=False, default=(USER, 'user'))
 
     username = models.CharField(max_length=255, null=False, unique=True)
-    email = models.EmailField(null=False, unique=True)          
+    email = models.EmailField(null=False, unique=True)            #parenthesis can't be empty
+    #password = models.CharField(max_length=255, null=False)      #might not be needed since it was created in Abstract User
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
