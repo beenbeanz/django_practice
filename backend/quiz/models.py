@@ -4,6 +4,23 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
 
 # Create your models here.
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("The Email field must be set")
+        email = self.normalize_email(email)
+        user = CustomUser(email=email, **extra_fields)
+        user.set_password(password)  # Ensures the password is hashed
+        user.save(using=self._db)
+        return user
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault('role', CustomUser.SUPERVISOR)
+        return self.create_user(email, password, **extra_fields)
+
+    
 class CustomUser(AbstractUser):
     USER = 1
     SUPERVISOR = 2
@@ -16,7 +33,7 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
-    objects = BaseUserManager()
+    objects = CustomUserManager()
 
     def __str__(self):
     	return "{}".format(self.email)
