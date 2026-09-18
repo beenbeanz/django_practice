@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'dj_rest_auth'
 ]
+AUTH_USER_MODEL ='quiz.CustomUser'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
