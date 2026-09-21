@@ -18,8 +18,29 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from quiz.views import UserViewSet, QuizViewSet, QuestionViewSet
+from rest_framework_simplejwt import views as jwt_views
+
+router = DefaultRouter()
+router.register(r"users", UserViewSet)
+router.register(r"quizzes", QuizViewSet)
+router.register(r"questions", QuestionViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('dj_rest_auth.urls')),  # Include the quiz app's URLs
+    path('user/', UserViewSet.as_view({'get': 'list'}), name='user'),
+    path('quiz/', QuizViewSet.as_view({'get': 'list'}), name='quiz'),
+    path('question/', QuestionViewSet.as_view({'get': 'list'}), name='question'),
+    path('api/token/',
+         jwt_views.TokenObtainPairView.as_view(),
+         name ='token_obtain_pair'),
+    path('api/token/refresh/',
+         jwt_views.TokenRefreshView.as_view(),
+         name ='token_refresh'),
+    path('api/token/verify/',
+         jwt_views.TokenVerifyView.as_view(),
+         name ='token_verify'),
+    path('api/logout/', 
+         jwt_views.TokenBlacklistView.as_view(), 
+         name='logout'),
+    path('', include(router.urls))
 ]
