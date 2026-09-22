@@ -63,7 +63,14 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
+    class Type(models.IntegerChoices):
+        MULTIPLE_CHOICE = 1, "Multiple choice"
+        BOOLEAN = 2, "Boolean"
+        DROPDOWN = 3, "Dropdown"
+        NUMERICAL = 4, "Numerical"
+
     question = models.CharField(max_length=255)
+    type = models.PositiveSmallIntegerField(choices=Type.choices, default=Type.MULTIPLE_CHOICE)
     answer = models.JSONField(default=list)
     incorrect = models.JSONField(default=list, blank=True)
     quiz = models.ForeignKey(

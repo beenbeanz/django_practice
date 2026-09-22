@@ -1,18 +1,8 @@
 from rest_framework import serializers
 from .models import Quiz, Question, CustomUser
-MULTIPLE_CHOICE = 1
-BOOLEAN = 2
-DROPDOWN = 3
-NUMERICAL = 4
-FREE_RESPONSE = 5
 
-TYPE_CHOICES = [
-    (MULTIPLE_CHOICE, 'multiple choice'),  
-    (BOOLEAN, 'boolean'),
-    (DROPDOWN, 'dropdown'),
-    (NUMERICAL, 'numerical'),
-    (FREE_RESPONSE, 'free response'),
-]
+
+TYPE_CHOICES = Question.Type.choices
 
 class userSerializer(serializers.ModelSerializer):
     class Meta:
@@ -24,7 +14,7 @@ class userSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             username=validated_data['username'],
             password=validated_data['password'],
-            role=validated_data['role']
+            role=validated_data.get('role', CustomUser.Role.USER)
         )
         return user
 
@@ -39,12 +29,9 @@ class QuizSerializer(serializers.ModelSerializer):
         fields = ['id', 'types', 'title', 'creator']
 
     def validate_types(self, value):
-        valid_choices = [1,2,3,4,5]
+        valid_choices = [choice[0] for choice in TYPE_CHOICES]
         if not isinstance(value, list):
             raise serializers.ValidationError("Types must be a list.")
         if not set(value).issubset(set(valid_choices)):
             raise serializers.ValidationError("Invalid type choice.")
-        results = []
-        for item in value:
-            results.append(TYPE_CHOICES[item-1][1])
-        return results
+        return value

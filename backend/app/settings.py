@@ -30,8 +30,11 @@ ALLOWED_HOSTS = []
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
 }
 
 # Application definition
@@ -47,7 +50,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'quiz',
     'corsheaders',
-    'dj_rest_auth'
+    'dj_rest_auth',
+    'rest_framework_simplejwt.token_blacklist'
 ]
 AUTH_USER_MODEL ='quiz.CustomUser'
 
