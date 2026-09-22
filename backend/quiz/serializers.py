@@ -48,4 +48,3 @@ class QuizSerializer(serializers.ModelSerializer):
         for item in value:
             results.append(TYPE_CHOICES[item-1][1])
         return results
-        

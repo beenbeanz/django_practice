@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from .models import Quiz, Question, CustomUser  
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
