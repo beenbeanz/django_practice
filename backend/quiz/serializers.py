@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Quiz, Question, CustomUser
 
-
 TYPE_CHOICES = Question.Type.choices
 
 class userSerializer(serializers.ModelSerializer):

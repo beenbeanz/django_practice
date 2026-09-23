@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from quiz.views import UserViewSet, QuizViewSet, QuestionViewSet
+from quiz.views import QuestionInstanceView, UserViewSet, QuizViewSet, QuestionViewSet
 from rest_framework_simplejwt import views as jwt_views
 
 router = DefaultRouter()
@@ -30,6 +30,7 @@ urlpatterns = [
     path('user/', UserViewSet.as_view({'get': 'list'}), name='user'),
     path('quiz/', QuizViewSet.as_view({'get': 'list'}), name='quiz'),
     path('question/', QuestionViewSet.as_view({'get': 'list'}), name='question'),
+    path('questioninstance/', QuestionInstanceView.as_view({'get': 'list'}), name='question-instance'),
     path('api/token/',
          jwt_views.TokenObtainPairView.as_view(),
          name ='token_obtain_pair'),

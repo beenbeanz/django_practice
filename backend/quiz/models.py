@@ -2,7 +2,6 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
-
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -27,7 +26,6 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
-
 class CustomUser(AbstractUser):
     class Role(models.IntegerChoices):
         USER = 1, "User"
@@ -48,7 +46,6 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
-
 class Quiz(models.Model):
     types = models.JSONField()
     title = models.CharField(max_length=255)
@@ -60,7 +57,6 @@ class Quiz(models.Model):
 
     def __str__(self):
         return self.title
-
 
 class Question(models.Model):
     class Type(models.IntegerChoices):
@@ -81,3 +77,14 @@ class Question(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+class QuestionInstance(models.Model):
+    question = models.ForeignKey(
+        Question,
+        on_delete=models.CASCADE,
+        related_name="instances",
+    )
+    type = models.PositiveSmallIntegerField(choices=Question.Type.choices, default=Question.Type.MULTIPLE_CHOICE)
+    answer = models.JSONField(default=list)
+    incorrect = models.JSONField(default=list, blank=True)
+    
