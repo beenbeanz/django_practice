@@ -28,14 +28,14 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractUser):
     class Role(models.IntegerChoices):
-        USER = 1, "User"
+        STUDENT = 1, "Student"
         TEACHER = 2, "Teacher"
 
     username = models.CharField(max_length=255, unique=True)
     email = models.EmailField(unique=True)
     role = models.PositiveSmallIntegerField(
         choices=Role.choices,
-        default=Role.USER,
+        default=Role.STUDENT,
     )
 
     USERNAME_FIELD = "email"
