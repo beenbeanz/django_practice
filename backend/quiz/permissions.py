@@ -3,7 +3,7 @@ from rest_framework.permissions import BasePermission
 def has_user_type(user, minimum_role):
     if not user.is_authenticated:
         return False
-    return user.user_type >= minimum_role
+    return user.role >= minimum_role
 
 
 class IsStudent(BasePermission):

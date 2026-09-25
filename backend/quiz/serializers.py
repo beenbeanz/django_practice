@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Quiz, Question, CustomUser
+from .models import QuestionInstance, Quiz, Question, CustomUser
 
 TYPE_CHOICES = Question.Type.choices
 
@@ -34,3 +34,8 @@ class QuizSerializer(serializers.ModelSerializer):
         if not set(value).issubset(set(valid_choices)):
             raise serializers.ValidationError("Invalid type choice.")
         return value
+
+class QuestionInstanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = QuestionInstance
+        fields = ['id', 'question', 'type', 'answer', 'incorrect', 'submitted']

@@ -85,6 +85,6 @@ class QuestionInstance(models.Model):
         related_name="instances",
     )
     type = models.PositiveSmallIntegerField(choices=Question.Type.choices, default=Question.Type.MULTIPLE_CHOICE)
-    answer = models.JSONField(default=list)
+    answer = models.JSONField(default=list, blank=True)
     incorrect = models.JSONField(default=list, blank=True)
-    
+    submitted = models.BooleanField(default=False)
