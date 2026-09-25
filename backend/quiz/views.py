@@ -62,6 +62,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 class QuestionInstanceViewSet(viewsets.ModelViewSet):
 	queryset = QuestionInstance.objects.all()
 	serializer_class = QuestionInstanceSerializer
+	permission_classes = [IsTeacher]
 
 	def get_permissions(self):
 			if self.action in ['create', 'update', 'destroy']:
