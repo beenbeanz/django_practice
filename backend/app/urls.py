@@ -17,14 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from quiz.views import QuestionInstanceViewSet, UserViewSet, QuizViewSet, QuestionViewSet
+from quiz.views import QuestionInstanceViewSet, UserViewSet, QuizViewSet, QuestionViewSet, TeacherQuestionInstanceViewSet
 from rest_framework_simplejwt import views as jwt_views
+from django.contrib.auth import views as auth_views
+
 
 router = DefaultRouter()
 router.register(r"users", UserViewSet)
 router.register(r"quizzes", QuizViewSet)
 router.register(r"questions", QuestionViewSet)
 router.register(r"questioninstance", QuestionInstanceViewSet)
+#router.register(r"teacher/questions", TeacherQuestionInstanceViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,5 +44,14 @@ urlpatterns = [
     path('api/logout/', 
          jwt_views.TokenBlacklistView.as_view(), 
          name='logout'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('teacher/questions/', TeacherQuestionInstanceViewSet.as_view(), name='teacher-questions'),
     path('', include(router.urls))
 ]
+
+#path('dashboard/', my_template_view, name='dashboard'),
+
+
+#
+# venv\Scripts\Activate
+# python manage.py runserver

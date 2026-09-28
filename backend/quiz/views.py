@@ -6,6 +6,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import QuizSerializer, QuestionSerializer, userSerializer
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsTeacher, IsStudent
+from django.views.generic import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 
 # Create your views here.
 class UserViewSet(viewsets.ModelViewSet):
@@ -80,4 +83,13 @@ class QuestionInstanceViewSet(viewsets.ModelViewSet):
 		instance = serializer.save()
 		return Response(QuestionInstanceSerializer(instance).data, status=status.HTTP_200_OK)
 
-	
+class TeacherQuestionInstanceViewSet(LoginRequiredMixin, UserPassesTestMixin, ListView):
+	template_name = 'teacher_questions.html'
+	context_object_name = 'instances'
+
+	def test_func(self):
+		return self.request.user.role == CustomUser.role.TEACHER
+
+	def get_queryset(self):
+		return QuestionInstance.objects.filter(question__quiz__creator=self.request.user)
+
