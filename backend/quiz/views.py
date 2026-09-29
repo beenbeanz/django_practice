@@ -88,8 +88,7 @@ class TeacherQuestionInstanceViewSet(LoginRequiredMixin, UserPassesTestMixin, Li
 	context_object_name = 'instances'
 
 	def test_func(self):
-		return self.request.user.role == CustomUser.role.TEACHER
+		return self.request.user.role == CustomUser.Role.TEACHER
 
 	def get_queryset(self):
 		return QuestionInstance.objects.filter(question__quiz__creator=self.request.user)
-

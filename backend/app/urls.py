@@ -49,8 +49,6 @@ urlpatterns = [
     path('', include(router.urls))
 ]
 
-#path('dashboard/', my_template_view, name='dashboard'),
-
 
 #
 # venv\Scripts\Activate
