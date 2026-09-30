@@ -83,6 +83,19 @@ class QuestionInstanceViewSet(viewsets.ModelViewSet):
 		instance = serializer.save()
 		return Response(QuestionInstanceSerializer(instance).data, status=status.HTTP_200_OK)
 
+	def create(self, request, *args, **kwargs):
+		serializer = self.get_serializer(data=request.data) 
+		serializer.is_valid(raise_exception=True)
+		serializer.save()
+		return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+	def destroy(self, request, *args, **kwargs):
+			instance = self.get_object()
+			if instance.submitted:
+				return Response({"error": "Cannot delete a question instance for a submitted quiz."}, status=400)
+			self.perform_destroy(instance)
+			return Response(status=status.HTTP_204_NO_CONTENT)
+
 class TeacherQuestionInstanceViewSet(LoginRequiredMixin, UserPassesTestMixin, ListView):
 	template_name = 'teacher_questions.html'
 	context_object_name = 'instances'
