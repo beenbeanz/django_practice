@@ -1,9 +1,0 @@
-<h1>My question instances</h1>
-<form method="post" action="{% url 'logout' %}">{% csrf_token %}<button>Log out</button></form>
-<ul>
-  {% for qi in instances %}
-    <li>{{ qi.question.question }} — answer: {{ qi.answer }}, incorrect: {{ qi.incorrect }}</li>
-  {% empty %}
-    <li>Nothing yet.</li>
-  {% endfor %}
-</ul>
