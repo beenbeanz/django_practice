@@ -30,7 +30,7 @@ class QuizViewSet(viewsets.ModelViewSet):
 class QuestionViewSet(viewsets.ModelViewSet):
 	queryset = Question.objects.all()
 	serializer_class = QuestionSerializer
-	permission_classes = [IsAuthenticated]
+	permission_classes = [IsTeacher]
 
 	def get_permissions(self):
 		if self.action in ['create', 'update', 'destroy']:
@@ -38,7 +38,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
 		else:
 			permission_classes = [IsAuthenticated]
 		return [p() for p in permission_classes]
-	#might not need all these funcs below
+
 	def create(self, request, *args, **kwargs):
 		serializer = self.get_serializer(data=request.data) 
 		serializer.is_valid(raise_exception=True)
